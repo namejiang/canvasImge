@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<style>
+	        .list{
+	            width: 80%;
+	            padding: 20px;
+	            overflow: hidden;
+	            box-sizing: border-box;
+	        }
+	        .list .list-item{
+	            float: left;
+	            overflow: hidden;
+	            position: relative;
+	            width: calc(33.333% - 20px);
+	            margin: 0 20px 20px 0;
+	            border: 1px solid #ccc;
+	            box-sizing: border-box;
+	        }
+	        .list-item canvas{
+	            width: 100%;
+	        }
+	        .item-nav{
+	            overflow: hidden;
+	        }
+	        .item-nav-key{
+	            width: calc(30% - 7px);
+	            float: left;
+	            color: #fff;
+	            line-height: 2;
+	            margin-right: 10px;
+	            text-align: center;
+	        }
+	        .item-nav-key a{
+	        	display: block;
+				text-decoration: none;
+				color: inherit;
+	        }
+	        .item-nav-key:first-child{
+	            width: 38%;
+	            background: #21970f;
+	        }
+	        .item-nav-key:nth-child(2){
+	        	background: #d2062b;
+	        }
+	        .item-nav-key:nth-child(3){
+	        	background: #2610b1;
+	        	margin: 0;
+	        }
+	    </style>
+	</head>
+	<body>
+		<script type="text/javascript" src="js/jquery-1.8.3.min.js" ></script>
+		<script type="text/javascript" src="js/jquery.qrcode.js" ></script>
+        <script type="text/javascript" src="js/qrcode.js" ></script> 
+        <script type="text/javascript" src="js/utf.js" ></script>
+        <script type="text/javascript" src="js/canvas.js" ></script>
+		<div class="list">
+			
+		</div>
+		<div id="qrcode"></div>
+
+		<script>
+		    var data = [
+		        {
+		            url:"https://www.baidu.com",
+		            code:"./img/pi_09.png",
+		            logo:"./img/logo.jpg",
+		            icon:"./img/pi_01.png",
+		            img:"./img/pi_05.png",
+		            title:"资生堂安热沙防晒霜SPF50 PA++++",
+		            msg: "实力防护 尽享阳光不怕晒",
+		            pic: "￥39.9",
+		            ku: 1254
+		        },
+		        {
+		            url:"https://www.baidu.com",
+		            code:"./img/pi_09.png",
+		            logo:"./img/logo.jpg",
+		            icon:"./img/pi_01.png",
+		            img:"./img/pi_05.png",
+		            title:"资生堂安热沙防晒霜SPF50 PA++++",
+		            msg: "实力防护 尽享阳光不怕晒",
+		            pic: "￥39.9",
+		            ku: 1254
+		        }
+
+		    ]
+		    new canvas(data)
+	</script>
+	</body>
+</html>
