@@ -41,7 +41,7 @@ canvas.prototype.image = function(obj, callback){
 
     cvs.fillStyle = "#333";
     cvs.textAlign="center";
-    cvs.font = "900 23px 微软雅黑";
+    cvs.font = "900 30px 微软雅黑";
     cvs.fillText(obj.title, this.width/2,96);
     cvs.font = "600 20px 微软雅黑";
     cvs.fillText(obj.msg, this.width/2,131);
@@ -52,7 +52,7 @@ canvas.prototype.image = function(obj, callback){
     var code = new Image();
     code.src = this.erweima(obj);
     code.onload = function () {
-    	cvs.drawImage(code,517,615,115,115)
+    	cvs.drawImage(code, _this.width-120 , _this.height-120,115,115)
     }
     var logo = new Image();
     logo.src = obj.logo;

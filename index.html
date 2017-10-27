@@ -14,23 +14,25 @@
 	            float: left;
 	            overflow: hidden;
 	            position: relative;
-	            width: calc(33.333% - 20px);
+	            width: calc(20% - 20px);
 	            margin: 0 20px 20px 0;
 	            border: 1px solid #ccc;
 	            box-sizing: border-box;
 	        }
-	        .list-item canvas{
+	        .list-item canvas,
+	        .list-item img{
 	            width: 100%;
 	        }
 	        .item-nav{
 	            overflow: hidden;
 	        }
 	        .item-nav-key{
-	            width: calc(30% - 7px);
+	            width: calc(30% - 1.2px);
 	            float: left;
 	            color: #fff;
 	            line-height: 2;
-	            margin-right: 10px;
+	            font-size: .6rem;
+	            margin-right: 3px;
 	            text-align: center;
 	        }
 	        .item-nav-key a{
@@ -56,13 +58,98 @@
 		<script type="text/javascript" src="js/jquery.qrcode.js" ></script>
         <script type="text/javascript" src="js/qrcode.js" ></script> 
         <script type="text/javascript" src="js/utf.js" ></script>
-        <script type="text/javascript" src="js/canvas.js" ></script>
+        <!-- <script type="text/javascript" src="js/canvas.js" ></script> -->
 		<div class="list">
 			
 		</div>
 		<div id="qrcode"></div>
 
 		<script>
+		function canvas(json){
+	this.json = json;
+	this.width = 500
+	this.height = 640
+	this.init()
+}
+canvas.prototype.init = function(){
+	var _this = this;
+	var itemDom = '';
+	$.each(this.json, function(index,obj){
+		_this.item(obj,function(item){
+			itemDom += item
+		})
+	})
+	$(".list").html(itemDom)
+}
+canvas.prototype.item = function(obj,callback){
+	var item = document.createElement("div")
+    var item_nav = document.createElement("div")
+    item.className = "list-item"
+    item_nav.className = "list-nav"
+    this.image(obj, function(cv){
+        item_nav.innerHTML = '<div class="item-nav-key"><a href="'+obj.code+'">查看二维码</a></div>'+
+                            '<div class="item-nav-key"><a href="'+cv.toDataURL('image/jpg')+'" download="product.jpg">下载图片</a></div>'+
+                            '<div class="item-nav-key">库存'+obj.ku+'</div>'
+        var img = new Image()
+        img.src = cv.toDataURL('image/jpg')
+        item.append(img)
+        item.append(item_nav)
+    	// callback(item)
+    	$(".list").append(item)
+    })
+}
+canvas.prototype.image = function(obj, callback){
+	var cv = document.createElement("canvas");
+        cv.width = this.width;
+        cv.height = this.height;
+    var cvs = cv.getContext('2d');
+        cvs.fillStyle = "#fff";
+        cvs.fillRect(0, 0, this.width, this.height)
+    var _this = this
+
+    cvs.fillStyle = "#333";
+    cvs.textAlign="center";
+    cvs.font = "900 20px 微软雅黑";
+    cvs.fillText(obj.title, this.width/2,_this.height/7+15);
+    cvs.font = "600 18px 微软雅黑";
+    cvs.fillText(obj.msg, this.width/2,_this.height/7+45);
+    cvs.fillStyle = "#ee5587";
+    cvs.font = "900 28px 微软雅黑";
+    cvs.fillText(obj.pic, this.width/2,_this.height/7*6+25);
+    
+
+    var code = new Image();
+    code.src = this.erweima(obj);
+    code.onload = function () {
+    	cvs.drawImage(code, _this.width-110 , _this.height-110,110,110)
+    }
+    var logo = new Image();
+    logo.src = obj.logo;
+    logo.onload = function () {
+        cvs.drawImage(logo, _this.width-65,_this.height-65, 30, 30)
+    }
+    var icon = new Image();
+    icon.src = obj.icon;
+    icon.onload = function () {
+        cvs.drawImage(icon, 0, 0, _this.width/2+10, _this.height/7)
+    }
+    var image = new Image();
+    image.src = obj.img;
+    image.onload = function () {
+        cvs.drawImage(image, (_this.width-(_this.width/2-40))/2, _this.height/7+65, _this.width/2-40, _this.height/7*4)
+        callback(cv)
+    }
+}
+canvas.prototype.erweima = function(obj){
+	var qrcode = $('#qrcode').qrcode({
+		 render: "canvas",
+		 width: 80,
+		 height: 80,
+		 text: obj.url 
+	}).hide();
+	var ac = qrcode.find('canvas').get(0);
+    return ac.toDataURL('image/jpg');
+}
 		    var data = [
 		        {
 		            url:"https://www.baidu.com",
