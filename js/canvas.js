@@ -79,5 +79,7 @@ canvas.prototype.erweima = function(obj){
 		 text: obj.url 
 	}).hide();
 	var ac = qrcode.find('canvas').get(0);
-    return ac.toDataURL('image/jpg');
+        var jpg = ac.toDataURL('image/jpg');
+	$('#qrcode').html('')
+    	return jpg
 }
